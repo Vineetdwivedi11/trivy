@@ -197,6 +197,10 @@ func (p *Parser) parseBlock(block []byte, lineNum int) (lib Library, deps []stri
 			continue
 		}
 
+		// Package patterns are only declared on the unindented header line of a block.
+		// Indented lines (e.g. keys under dependenciesMeta) must not override the package name.
+		isHeader := line[0] != ' ' && line[0] != '\t'
+
 		line = strings.TrimPrefix(strings.TrimSpace(line), "\"")
 
 		switch {
@@ -208,6 +212,10 @@ func (p *Parser) parseBlock(block []byte, lineNum int) (lib Library, deps []stri
 		case strings.HasPrefix(line, "dependencies:"):
 			// start dependencies block
 			deps = parseDependencies(scanner)
+			continue
+		}
+
+		if !isHeader {
 			continue
 		}
 

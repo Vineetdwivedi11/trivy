@@ -158,3 +158,14 @@ var (
 		},
 	}
 )
+
+var yarnV2DependenciesMeta = []ftypes.Package{
+	{
+		ID:      "es-toolkit@1.47.0",
+		Name:    "es-toolkit",
+		Version: "1.47.0",
+		Locations: []ftypes.Location{
+			{StartLine: 8, EndLine: 20},
+		},
+	},
+}
